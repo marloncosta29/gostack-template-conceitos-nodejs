@@ -33,15 +33,15 @@ app.put("/repositories/:id", isUuidValid, (request, response) => {
   const { id } = request.params
   const { title, url, techs, likes } = request.body
   const index = repositories.findIndex(r => r.id === id)
-  console.log(repositories[index])
   repositories[index] = {
     ...repositories[index],
     title, url, techs
   }
   if(likes){
     request.body.likes = 0
+    return response.json({ ...request.body })
   }
-  response.json({ id, ...request.body })
+  return response.json({ id, ...request.body })
 });
 
 app.delete("/repositories/:id", isUuidValid, (request, response) => {
